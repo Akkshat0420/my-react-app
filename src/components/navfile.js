@@ -1,11 +1,24 @@
-import React from 'react';
-//import 'bootstrap/dist/css/bootstrap.min.css';
+
+import React, { useState, useEffect } from 'react';
+
+
+import 'bootstrap/dist/css/bootstrap.min.css';
+import './navbar.css';
+//import { auth } from './firebase'; 
+//import Login from './login';// Import your custom CSS file for additional styling
 
 const Navbar = () => {
+  
+  
+
+  
+
+  
   return (
-    <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
+    <nav className="navbar navbar-expand-lg navbar-dark navbar-custom">
       <div className="container">
         <a className="navbar-brand" href="#">BrandName</a>
+       
         <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
           <span className="navbar-toggler-icon"></span>
         </button>
@@ -13,10 +26,10 @@ const Navbar = () => {
           <ul className="navbar-nav ms-auto">
             <li className="nav-item">
               <a className="nav-link active" aria-current="page" href="#">Home</a>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link" href="#">Features</a>
-            </li>
+           </li>
+           <li className="nav-item">
+              <a className="nav-link active" aria-current="page" href="#">Login</a>
+           </li>
             <li className="nav-item">
               <a className="nav-link" href="#">Pricing</a>
             </li>
@@ -25,6 +38,13 @@ const Navbar = () => {
             </li>
           </ul>
         </div>
+        <div className="nav__menu ms-auto">
+        <a className="nav__link" href="#">Home</a>
+        
+        <a className="nav__link" href="#">Login</a>
+        <a className="nav__link" href="#">Pricing</a>
+        <a className="nav__link" href="#">Contact</a>
+      </div>
       </div>
     </nav>
   );

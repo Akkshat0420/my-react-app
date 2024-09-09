@@ -7,12 +7,17 @@ import Login from './login';
 //import Signup from './signup';
 import { BrowserRouter as Router, Route,   useParams, Routes, useNavigate } from 'react-router-dom';
 import Signup from './signup';
+import HomePage from './homefile';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import Navbar from './navfile';
 
 const RepairRequest = () => {
   return (
     <Router>
+      
       <Routes>
-        <Route  path="/" element={<CompaniesPage/>} />
+      <Route  path="/" element={<HomePage/>} />
+        <Route  path="/brands" element={<CompaniesPage/>} />
         <Route path="/versions/:companyName" element={<VersionsPage />} />
         <Route path="/subversions/:companyName/:versionName" element={<SubVersionsPage />} />
         <Route path="/issues/:companyName/:versionName/:subVersionName" element={<IssuesPage />} />
@@ -44,18 +49,35 @@ const CompaniesPage = () => {
   };
 
   return (
-    <div style={styles.container}>
-      <h1>Repair Request</h1>
-      <h2>Companies</h2>
-      <div style={{ display: 'flex', flexWrap: 'wrap' }} >
+    <div className="container text-center py-5">
+      {/* Main Heading */}
+      <h1 className="mb-4 display-4 fw-bold">Repair Request</h1>
+      
+      {/* Sub-heading */}
+      <h2 className="mb-5 text-primary">Select a Company</h2>
+      
+      {/* Company Cards */}
+      <div className="row">
         {companies.map(company => (
-          <div key={company.id} onClick={() => handleCompanyClick(company)} style={{ margin: 10 }}>
-            <img src={company.iconUrl} alt={company.name}  style={styles.loginBox}/>
-            <p>{company.name}</p>
+          <div 
+            key={company.id} 
+            className="col-6 col-md-4 col-lg-2 mb-3" 
+            onClick={() => handleCompanyClick(company)}
+          >
+            <div className="card h-100 shadow-lg" style={{ cursor: 'pointer', borderRadius: '10px' }}>
+              <img 
+                src={company.iconUrl} 
+                alt={company.name} 
+                className="card-img-top p-3" 
+                style={{ borderRadius: '10px', height: '100px', objectFit: 'contain' }} 
+                
+              />
+              <div className="card-body">
+                <h5 className="card-title text-dark">{company.name}</h5>
+              </div>
+            </div>
           </div>
         ))}
-       
-        
       </div>
     </div>
   );
@@ -80,17 +102,33 @@ const VersionsPage = () => {
   };
 
   return (
-    <div style={styles.container}>
-      <h2 className='text-start h-8'>Versions for {companyName}</h2>
-      <div style={{ display: 'flex', flexWrap: 'wrap' }}>
-        {versions.map(version => (
-          <div key={version.id} onClick={() => handleVersionClick(version)} style={{ margin: 10 }}>
-            <img src={version.description} alt={version.versionName} style={{ width: 100, height: 100, cursor: 'pointer' }} />
-            <p>{version.versionName}</p>
+    <div className="container py-4">
+    {/* Title */}
+    <h2 className="text-start mb-4">Versions for {companyName}</h2>
+    
+    {/* Version Cards */}
+    <div className="row">
+      {versions.map(version => (
+        <div 
+          key={version.id} 
+          className="col-6 col-md-4 col-lg-2 mb-3" 
+          onClick={() => handleVersionClick(version)}
+        >
+          <div className="card h-100 shadow-sm text-center" style={{ cursor: 'pointer', borderRadius: '10px' }}>
+            <img 
+              src={version.description} 
+              alt={version.versionName} 
+              className="card-img-top p-2" 
+              style={{  height: '150px', margin: '0 auto', objectFit: 'contain' }} 
+            />
+            <div className="card-body p-2">
+              <p className="card-title fw-bold text-dark">{version.versionName}</p>
+            </div>
           </div>
-        ))}
-      </div>
+        </div>
+      ))}
     </div>
+  </div>
   );
 };
 
@@ -115,18 +153,34 @@ const SubVersionsPage = () => {
 
   return (
     
-    <div style={styles.container}>
-      <h2>SubVersions for {versionName}</h2>
-      <div style={{ display: 'flex', flexWrap: 'wrap' }}>
-        {subVersions.map(subVersion => (
-          <div key={subVersion.id} onClick={() => handleSubVersionClick(subVersion)} style={{ margin: 10 }}>
-            <img src={subVersion.description} alt={subVersion.subVersionName} style={{ width: 100, height: 100, cursor: 'pointer' }} />
-            <p>{subVersion.subVersionName}</p>
+    <div className="container py-4">
+    {/* Subheading */}
+    <h2 className="text-center mb-4">SubVersions for {versionName}</h2>
+    
+    {/* SubVersion Cards */}
+    <div className="row">
+      {subVersions.map(subVersion => (
+        <div 
+          key={subVersion.id} 
+          className="col-6 col-md-4 col-lg-2 mb-4" 
+          onClick={() => handleSubVersionClick(subVersion)}
+          style={{ cursor: 'pointer' }}
+        >
+          <div className="card h-100 shadow-sm text-center" style={{ borderRadius: '10px' }}>
+            <img 
+              src={subVersion.description} 
+              alt={subVersion.subVersionName} 
+              className="card-img-top p-3" 
+              style={{ width: '80px', height: '80px', margin: '0 auto', objectFit: 'contain' }} 
+            />
+            <div className="card-body p-2">
+              <p className="card-title fw-bold text-dark" style={{ fontSize: '0.9rem' }}>{subVersion.subVersionName}</p>
+            </div>
           </div>
-          
-        ))}
-      </div>
+        </div>
+      ))}
     </div>
+  </div>
   );
 };
   const IssuesPage = () => {
@@ -138,6 +192,7 @@ const SubVersionsPage = () => {
     const [selectedIssue, setSelectedIssue] = useState(null);
     const [errorMessage, setErrorMessage] = useState('');
     const [successMessage, setSuccessMessage] = useState('');
+    const [description, setDescription] = useState('');
     const history=useNavigate();
     useEffect(() => {
       loadIssues(subVersionName);
@@ -149,7 +204,17 @@ const SubVersionsPage = () => {
       setIssues(issues);
     };
     const handleIssueClick = (issue) => {
-      setSelectedIssue(issue); // Update the selected issue
+      setSelectedIssue(issue);
+       // Update the selected issue
+    };
+    const handleInputChange = (event) => {
+      setDescription(event.target.value);
+    };
+  
+    // Handle form submission
+    const handleFormSubmit = () => {
+      // Your submit logic here, including handling the `description` value
+      handleSubmit(description);
     };
     const handleSubmit = async () => {
       const user = auth.currentUser; // Check if the user is authenticated
@@ -164,6 +229,7 @@ const SubVersionsPage = () => {
               description: selectedIssue.description,
               status:'pending',
               createdAt: new Date(),
+              description:description,
               
             });
             setSuccessMessage('Your repair request has been added!');
@@ -183,25 +249,57 @@ const SubVersionsPage = () => {
       }
     };
     return (
-      <div style={styles.container}>
-        <h2>Issues for {subVersionName}</h2>
-        <div style={{ display: 'flex', flexWrap: 'wrap' }}>
-          {issues.map(issue => (
-            <div key={issue.id}  onClick={() => handleIssueClick(issue)} style={{ margin: 10 }}>
-              <h1 className='bold text-4xl gap-4 grid-flow-row' >{issue.issueName}</h1>
-              <p style={{ width: 100, height: 100 }}>{issue.description}</p>
+      <div className="container py-4">
+      {/* Heading */}
+      <h2 className="text-center mb-4 text-primary">Issues for {subVersionName}</h2>
+      
+      {/* Issue Cards */}
+      <div className="row">
+        {issues.map(issue => (
+          <div 
+            key={issue.id} 
+            className="col-12 col-md-6 col-lg-4 mb-3"
+            onClick={() => handleIssueClick(issue)}
+            
+            style={{ cursor: 'pointer',borderColor:'orange' }}
+          >
+            <div className="card h-100 shadow-lg border-0 text-center" style={{ borderRadius: '15px', overflow: 'hidden' }}>
+              <div className="card-body p-4">
+                <h3 className="card-title fw-bold text-dark mb-3" style={{ fontSize: '1.25rem' }}>{issue.issueName}</h3>
+                <p className="card-text text-muted" style={{ height: '100px', overflow: 'hidden', textOverflow: 'ellipsis' }}>{issue.description}</p>
+              </div>
             </div>
-          ))}
+          </div>
+        ))}
+        <div >
+        <textarea 
+            className="form-control mb-3"
+            rows="4"
+            placeholder="Enter description here..."
+            value={description}
+            onChange={handleInputChange}
+            style={{ resize: 'none', maxWidth: '500px', margin: '0 auto' }}
+          />
         </div>
-        {selectedIssue && (
-        <div>
-          <button onClick={handleSubmit} style={{ marginTop: 20 }}>Submit Repair Request</button>
-          {successMessage && <p style={{ color: 'green', marginTop: 10 }}>{successMessage}</p>}
-          {errorMessage && < p>{errorMessage}</p>}
+      </div>
+
+      {/* Text Area and Submit Button */}
+      {selectedIssue && (
+        <div className="text-center mt-4">
+         
+          <button 
+            onClick={handleFormSubmit} 
+            className="btn btn-success btn-lg px-4 py-2"
+            style={{ borderRadius: '25px' }}
+          >
+            Submit Repair Request
+          </button>
+          {successMessage && <p className="text-success mt-3">{successMessage}</p>}
+          {errorMessage && <p className="text-danger mt-3">{errorMessage}</p>}
         </div>
       )}
-      </div>
-    );
+    </div>
+  );
     
   };
   
