@@ -9,20 +9,21 @@ import { BrowserRouter as Router, Route,   useParams, Routes, useNavigate } from
 import Signup from './signup';
 import HomePage from './homefile';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Navbar from './navfile';
+//import Navbar from './navfile';
 
 const RepairRequest = () => {
   return (
     <Router>
       
       <Routes>
-      <Route  path="/" element={<HomePage/>} />
-        <Route  path="/brands" element={<CompaniesPage/>} />
+      <Route  path="/home" element={<HomePage/>} />
+        <Route  path="/" element={<CompaniesPage/>} />
         <Route path="/versions/:companyName" element={<VersionsPage />} />
         <Route path="/subversions/:companyName/:versionName" element={<SubVersionsPage />} />
         <Route path="/issues/:companyName/:versionName/:subVersionName" element={<IssuesPage />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
+       
       </Routes>
     </Router>
     
@@ -229,8 +230,8 @@ const SubVersionsPage = () => {
               description: selectedIssue.description,
               status:'pending',
               createdAt: new Date(),
-              description:description,
-              
+              descri:description
+            
             });
             setSuccessMessage('Your repair request has been added!');
             setErrorMessage('');
@@ -377,44 +378,6 @@ const SubVersionsPage = () => {
     }
   };
   
-  const styles = {
-    container: {
-      display: 'flex',
-      justifyContent: 'center',
-      alignItems: 'center',
-      height: '100vh', // Full viewport height
-      backgroundColor: '#f0f0f0', // Adjust background color as needed
-    },
-    loginBox: {
-      padding: '10px',
-      backgroundColor: '#fff',
-      borderRadius: '8px',
-      boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
-      textAlign: 'center',
-      width: '100px',
-      height:'100px',
-      
-    },
-    form: {
-      display: 'flex',
-      flexDirection: 'column',
-      gap: '15px',
-    },
-    input: {
-      padding: '10px',
-      fontSize: '16px',
-      borderRadius: '4px',
-      border: '1px solid #ccc',
-    },
-    button: {
-      padding: '10px',
-      fontSize: '16px',
-      backgroundColor: '#007BFF',
-      color: '#fff',
-      border: 'none',
-      borderRadius: '4px',
-      cursor: 'pointer',
-    },
-  };
+  
 
 export default RepairRequest;
