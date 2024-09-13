@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './navbar.css';
 import { auth } from './firebase'; 
-import RepairRequest from './Services';
+//import RepairRequest from './Services';
 //import Login from './login';// Import your custom CSS file for additional styling
 
 const Navbar = () => {
@@ -40,18 +40,10 @@ const Navbar = () => {
         <div className="collapse navbar-collapse" id="navbarNav">
           <ul className="navbar-nav ms-auto">
             <li className="nav-item">
-              <a className="nav-link active" aria-current="page" href="#">Home</a>
+              <a className="nav-link active" aria-current="page" href="/">Home</a>
             </li>
             <li className="nav-item">
-              {
-              isAuthenticated ? (
-                <>
-                  <Link className="nav-link" to="/repair">Your Repair</Link>
-                  <button className="btn btn-link nav-link" onClick={handleLogout}>Logout</button>
-                </>
-              ) : (
-                <Link className="nav-link" to="/login">Login</Link>
-              )}
+              <a className="nav-link active" aria-current="page" href="/login">Login</a>
             </li>
             
             <li className="nav-item">
@@ -63,7 +55,7 @@ const Navbar = () => {
           </ul>
         </div>
         <div className="nav__menu ms-auto">
-        <a className="nav__link" href="#">Home</a>
+        <a className="nav__link" href="/">Home</a>
         
         <a className="nav__link" href="/login">Login</a>
         <a className="nav__link" href="#">Pricing</a>

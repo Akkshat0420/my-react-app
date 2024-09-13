@@ -9,7 +9,9 @@ const HomePage = () => {
   const handleBrandSelection = () => {
     navigate('/brands'); // Navigate to the brand selection page
   };
-
+  const handleSellAction=() =>{
+    navigate('/refurbished')
+  };
   return (
     <div className="container py-5">
       <div className="row align-items-center">
@@ -25,13 +27,19 @@ const HomePage = () => {
 
         {/* Right Side: Button */}
         <div className="col-md-6 text-center">
-          <button
-            className="btn btn-primary btn-lg"
-            onClick={handleBrandSelection}
-          >
-            Choosing Brand
-          </button>
-        </div>
+  <button
+    className="btn btn-primary btn-lg mr-2"
+    onClick={handleBrandSelection}
+  >
+    Choosing Brand
+  </button>
+  <button
+    className="btn btn-secondary btn-lg ml-2"
+    onClick={handleSellAction}
+  >
+    Other Button
+  </button>
+</div>
       </div>
 
       {/* What We Offer Section */}
