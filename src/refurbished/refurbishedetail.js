@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams ,useNavigate} from 'react-router-dom';
 import { doc, getDoc,collection, addDoc, serverTimestamp } from 'firebase/firestore';
 import { db,auth } from './firebase'; // Assuming Firebase is set up correctly
 import axios from 'axios';
@@ -7,7 +7,7 @@ const ModelDetailPage = () => {
   const { modelId } = useParams();
   const [model, setModel] = useState(null);
   const [selectedStorage, setSelectedStorage] = useState(null);
-
+  const navigate=useNavigate();
   useEffect(() => {
     const fetchModelDetails = async () => {
       try {
@@ -53,6 +53,7 @@ const ModelDetailPage = () => {
         });
         alert('Added to cart successfully!');
       } else {
+        navigate('/login');
         alert('Please log in to add items to your cart.');
       }
     } catch (error) {

@@ -1,66 +1,62 @@
-
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-
-import 'bootstrap/dist/css/bootstrap.min.css';
-import './navbar.css';
-import { auth } from './firebase'; 
-//import RepairRequest from './Services';
-//import Login from './login';// Import your custom CSS file for additional styling
+import { auth, signOut } from './firebase'; // Firebase auth and sign-out
+import { onAuthStateChanged } from 'firebase/auth'; // Listen to auth changes
+//import { NavLink } from 'react-router-dom';
 
 const Navbar = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  
 
   useEffect(() => {
-    // Mock authentication check; replace with actual logic
-    const checkAuthentication = () => {
-      const user = auth.currentUser; // Replace with actual authentication logic
-      setIsAuthenticated(!user);
-    };
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      setIsAuthenticated(!!user); // Update authentication status
+    });
 
-    checkAuthentication();
+    return () => unsubscribe(); // Cleanup subscription on unmount
   }, []);
 
-  const handleLogout = () => {
-    // Mock logout logic; replace with actual logout logic
-    auth.signOut().then(() => {
-      setIsAuthenticated(false);
-     
-    });
+  const handleLogout = async () => {
+    try {
+      await signOut(auth); // Sign out the user
+      setIsAuthenticated(false); // Update state
+      window.location.href = '/login'; // Redirect to login after logout
+    } catch (error) {
+      console.error('Error during sign-out:', error);
+    }
   };
+
   return (
-    <nav className="navbar navbar-expand-lg navbar-dark navbar-custom">
+    <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
       <div className="container">
-        <a className="navbar-brand" href="#">BrandName</a>
-       
-        <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-          <span className="navbar-toggler-icon"></span>
-        </button>
-        <div className="collapse navbar-collapse" id="navbarNav">
-          <ul className="navbar-nav ms-auto">
-            <li className="nav-item">
-              <a className="nav-link active" aria-current="page" href="/">Home</a>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link active" aria-current="page" href="/login">Login</a>
-            </li>
-            
-            <li className="nav-item">
-              <a className="nav-link" href="#">Pricing</a>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link" href="#">Contact</a>
-            </li>
-          </ul>
-        </div>
-        <div className="nav__menu ms-auto">
-        <a className="nav__link" href="/">Home</a>
+        <a className="navbar-brand" href="/">FixYantra</a>
         
-        <a className="nav__link" href="/login">Login</a>
-        <a className="nav__link" href="#">Pricing</a>
-        <a className="nav__link" href="#">Contact</a>
-      </div>
+        
+        <ul className="navbar-nav ms-auto">
+  <li className="nav-item me-3">
+    <a className="nav-link fw-bold custom-nav-link" href="/">Home</a>
+  </li>
+  {isAuthenticated ? (
+    <>
+      <li className="nav-item me-3">
+        <a className="nav-link fw-bold custom-nav-link" href="/repair">Repair</a>
+      </li>
+      <li className="nav-item me-3">
+        <button className="nav-link btn btn-link fw-bold custom-nav-link" onClick={handleLogout}>Logout</button>
+      </li>
+    </>
+  ) : (
+    <li className="nav-item me-3">
+      <a className="nav-link fw-bold custom-nav-link" href="/login">Login</a>
+    </li>
+  )}
+  <li className="nav-item me-3">
+    <a className="nav-link fw-bold custom-nav-link" href="/profile">Profile</a>
+  </li>
+  <li className="nav-item me-3">
+    <a className="nav-link fw-bold custom-nav-link" href="/contact">Contact</a>
+  </li>
+</ul>
+
+
       </div>
     </nav>
   );

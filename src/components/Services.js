@@ -14,6 +14,9 @@ import AllBrands from '../refurbished/firstrefurbish';
 import RefurbishedModels from '../refurbished/secondrefurbish';
 //import RefurbishedDetail from '../refurbished/refurbishedetail';
 import ModelDetailPage from '../refurbished/refurbishedetail';
+import ProfilePage from './Header';
+import CartPage from './cart';
+import OrderPage from './order';
 //import SellRequest from './sellService';
 //import Navbar from './navfile';
 
@@ -42,14 +45,15 @@ const RepairRequest = () => {
         <Route path="/issues/:companyName/:versionName/:subVersionName" element={<IssuesPage />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
-        
+        <Route path="/cart" element={<CartPage />} />
+        <Route path="/orders" element={<OrderPage />} />
         <Route  path="/sell" element={<Companies/>} />
         <Route  path="/refurbished" element={<AllBrands/>} />
         <Route path="/models/:category/:brand" element={<RefurbishedModels/>} />
         <Route path="/versions1/:companyName" element={<Versions />} />
         <Route path="/subversions2/:companyName/:versionName" element={<SubVersions />} />
         <Route path="/refurbished/:category/:brand/:modelId" element={<ModelDetailPage />} />
-        
+        <Route path="/profile" element={<ProfilePage />} />
         <Route path="/storage/:subVersionName" element={<StoragePage />} />
         <Route 
           path="/evaluation1/:subVersionName/:storage" 
@@ -721,23 +725,7 @@ const SubVersionsPage = () => {
     </div>
   );
   }
-  function EvaluationBookPage({ evaluation, updateEvaluation }) {
-    return (
-      <div className="container-fluid h-100">
-        <div className="row h-100">
-          {/* Left side: Evaluation Summary */}
-          <div className="col-md-6 h-100 p-5">
-            <EvaluationSummary evaluation={evaluation} />
-          </div>
   
-          {/* Right side: Evaluation Form */}
-          <div className="col-md-6 h-100 p-5 bg-white">
-            <EvaluationPageOne updateEvaluation={updateEvaluation} />
-          </div>
-        </div>
-      </div>
-    );
-  }
   const fetchCompanies = async () => {
     try {
       const snapshot = await getDocs(collection(db, 'companies'));
