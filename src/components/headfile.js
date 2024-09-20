@@ -1,11 +1,13 @@
 // src/components/Header.js
 
 import React from 'react';
-import Slider from 'react-slick';
+
 import "slick-carousel/slick/slick.css"; 
 import "slick-carousel/slick/slick-theme.css";
-import Navbar from './navfile';
-
+//import Navbar from './navfile';
+import { Carousel } from 'react-bootstrap';
+import './Slider.css';
+import FixYantraNavbar from './navfile';
 const Header = () => {
   const settings = {
     dots: true,
@@ -19,30 +21,48 @@ const Header = () => {
 
   return (
     <header>
-      <Navbar />
-      <Slider {...settings} style={{padding : 20}}>
-        <div>
+      <FixYantraNavbar />
+      <div className="container mt-5 slider-container">
+      <Carousel>
+        {/* First Slide */}
+        <Carousel.Item>
           <img
-            src="https://s3n.cashify.in/cashify/web/f7ec0b702ec04d43a483041e7343f05f.webp"
-            alt="Slider 1"
-            className="w-full h-72 object-cover rounded"
+            className="d-block w-100 rounded"
+            src="download.png"
+            alt="First slide"
           />
-        </div>
-        <div>
+          
+        </Carousel.Item>
+
+        {/* Second Slide */}
+        <Carousel.Item>
           <img
-            src="https://s3n.cashify.in/cashify/web/813e0006ef304d72b82ea0a59f5b3f84.webp"
-            alt="Slider 2"
-            className="w-full h-72 object-cover rounded"
+            className="d-block w-100 rounded"
+            src="Picsart-6.jpg"
+            alt="Second slide"
           />
-        </div>
-        <div>
+          
+        </Carousel.Item>
+
+        {/* Third Slide */}
+        <Carousel.Item>
           <img
-            src="https://s3n.cashify.in/cashify/web/813e0006ef304d72b82ea0a59f5b3f84.webp"
-            alt="Slider 3"
-            className="w-full h-72 object-cover rounded"
+            className="d-block w-100 rounded"
+            src="Picsart-7.jpg"
+            alt="Third slide"
           />
-        </div>
-      </Slider>
+         
+        </Carousel.Item>
+        <Carousel.Item>
+          <img
+            className="d-block w-100 rounded"
+            src="Picsart-8.jpg"
+            alt="Third slide"
+          />
+         
+        </Carousel.Item>
+      </Carousel>
+    </div>
     </header>
   );
 };

@@ -2,7 +2,8 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import About from './BookingForm';
 import Issue from './issuefile';
-
+import DownloadAppSection from './dowlodapp';
+//import { Carousel } from 'react-bootstrap';
 const HomePage = () => {
   const navigate = useNavigate();
 
@@ -12,35 +13,75 @@ const HomePage = () => {
   const handleSellAction=() =>{
     navigate('/refurbished')
   };
+  const handleSell=() =>{
+    navigate('/sell')
+  };
   return (
-    <div className="container py-5">
-      <div className="row align-items-center">
-        {/* Left Side: Technician Image */}
-        <div className="col-md-6 text-center">
-          <img
-            src="https://as1.ftcdn.net/v2/jpg/06/89/56/52/1000_F_689565258_6fEop4uUbfgMDpjQgGLTR5Cpja3y78ml.jpg" // Add your technician image path here
-            alt="Technician"
-            className="img-fluid"
-            style={{ maxWidth: '100%' }}
-          />
+    <div>
+  <div className="container py-5">
+  <div className="row justify-content-center">
+    {/* Card 1: Choose Brand */}
+    <div className="col-md-4 d-flex justify-content-center mb-4">
+      <div className="card text-center" style={{ width: "12rem" }}>
+        <img
+          src="Arepa.jpg" // Add your small image here
+          alt="Brand"
+          className="img-fluid mx-auto mt-3 rounded"
+          style={{ width: "50px", height: "50px" }} // Control image size
+        />
+        <div className="card-body">
+          <h5 className="card-title">Repair</h5>
+          
+          <button className="btn btn-secondary" onClick={handleBrandSelection}>
+            Select Brand
+          </button>
         </div>
-
-        {/* Right Side: Button */}
-        <div className="col-md-6 text-center">
-  <button
-    className="btn btn-primary btn-lg mr-2"
-    onClick={handleBrandSelection}
-  >
-    Choosing Brand
-  </button>
-  <button
-    className="btn btn-secondary btn-lg ml-2"
-    onClick={handleSellAction}
-  >
-    Other Button
-  </button>
-</div>
       </div>
+    </div>
+
+    {/* Card 2: Other Action */}
+    <div className="col-md-4 d-flex justify-content-center mb-4">
+      <div className="card text-center" style={{ width: "12rem" }}>
+        <img
+          src="https://example.com/action-image.jpg" // Add your small image here
+          alt="Action"
+          className="img-fluid mx-auto mt-3"
+          style={{ width: "50px", height: "50px" }} // Control image size
+        />
+        <div className="card-body">
+          <h5 className="card-title">Buy Phone</h5>
+         
+          <button className="btn btn-secondary" onClick={handleSellAction}>
+            Buy Now
+          </button>
+        </div>
+      </div>
+    </div>
+
+    {/* Card 3: Sell */}
+    <div className="col-md-4 d-flex justify-content-center mb-4">
+      <div className="card text-center" style={{ width: "12rem" }}>
+        <img
+          src="	https://s3no.cashify.in/builder/81c3c74f0683463da548ae2cbe1fec28.webp?p=default&s=lg" // Add your small image here
+          alt="Sell"
+          className="img-fluid mx-auto mt-3"
+          style={{ width: "50px", height: "50px" }} // Control image size
+        />
+        <div className="card-body">
+          <h5 className="card-title">Sell Phone</h5>
+          
+          <button className="btn btn-secondary" onClick={handleSell}>
+            Sell Now
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+   
+
+
 
       {/* What We Offer Section */}
       <div className="mt-5">
@@ -75,11 +116,20 @@ const HomePage = () => {
           </div>
         </div>
       </div>
-
+    
       {/* About Section */}
       
+      <div className="container">
+      <div className="row">
+        <div className="col-12 col-md-6">
+          <img src="Picsart-3.jpg" alt="Responsive Image" className="img-fluid" />
+        </div>
+      </div>
+      </div>
       <Issue/>
+      <DownloadAppSection/>
       <About />
+    </div>
     </div>
   );
 };

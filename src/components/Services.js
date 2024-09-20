@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { db } from './firebase';
 import { auth } from './firebase';
+import {  Row, Col, Button } from 'react-bootstrap';
 import { collection, getDocs, query, where,addDoc } from 'firebase/firestore';
 import Login from './login';
 //import Signup from './signup';
@@ -17,6 +18,9 @@ import ModelDetailPage from '../refurbished/refurbishedetail';
 import ProfilePage from './Header';
 import CartPage from './cart';
 import OrderPage from './order';
+import SellPage from './sellpag';
+import SellWhy from './sellwhy';
+import DownloadAppSection from './dowlodapp';
 //import SellRequest from './sellService';
 //import Navbar from './navfile';
 
@@ -47,8 +51,8 @@ const RepairRequest = () => {
         <Route path="/signup" element={<Signup />} />
         <Route path="/cart" element={<CartPage />} />
         <Route path="/orders" element={<OrderPage />} />
-        <Route  path="/sell" element={<Companies/>} />
-        <Route  path="/refurbished" element={<AllBrands/>} />
+        <Route path="/sell" element={<Companies/>} />
+        <Route path="/refurbished" element={<AllBrands/>} />
         <Route path="/models/:category/:brand" element={<RefurbishedModels/>} />
         <Route path="/versions1/:companyName" element={<Versions />} />
         <Route path="/subversions2/:companyName/:versionName" element={<SubVersions />} />
@@ -101,36 +105,50 @@ const CompaniesPage = () => {
 
   return (
     <div className="container text-center py-5">
-      {/* Main Heading */}
-      <h1 className="mb-4 display-4 fw-bold">Repair Request</h1>
-      
-      {/* Sub-heading */}
-      <h2 className="mb-5 text-primary">Select a Company</h2>
-      
-      {/* Company Cards */}
-      <div className="row">
-        {companies.map(company => (
-          <div 
-            key={company.id} 
-            className="col-6 col-md-4 col-lg-2 mb-3" 
-            onClick={() => handleCompanyClick(company)}
+    {/* Main Heading */}
+    <img src="Picsart-1.jpg" alt="" className="object-cover rounded" />
+    <h1 className="mb-4 display-4 fw-bold">Repair Request</h1>
+  
+    {/* Sub-heading */}
+    <h2 className="mb-5 text-primary">Choose Brand</h2>
+  
+    {/* Company Cards */}
+    <div className="row">
+      {companies.map(company => (
+        <div
+          key={company.id}
+          className="col-4 col-md-3 col-lg-2 mb-2" // Reduced column size on medium screens
+          onClick={() => handleCompanyClick(company)}
+        >
+          <div
+            className="card shadow-lg"
+            style={{
+              cursor: 'pointer',
+              borderRadius: '10px',
+              width:'100px',
+              height: '95px', // Reduced card height
+              padding: '5px' // Added padding for spacing
+            }}
           >
-            <div className="card h-100 shadow-lg" style={{ cursor: 'pointer', borderRadius: '10px' }}>
-              <img 
-                src={company.iconUrl} 
-                alt={company.name} 
-                className="card-img-top p-3" 
-                style={{ borderRadius: '10px', height: '100px', objectFit: 'contain' }} 
-                
-              />
-              <div className="card-body">
-                <h5 className="card-title text-dark">{company.name}</h5>
-              </div>
+            <img
+              src={company.iconUrl}
+              alt={company.name}
+              className="card-img-top p-1"
+              style={{
+                borderRadius: '8px',
+                height: '40px', // Reduced image height
+                objectFit: 'contain'
+              }}
+            />
+            <div className="card-body p-2">
+              <h6 className="card-title text-dark">{company.name}</h6> {/* Reduced font size */}
             </div>
           </div>
-        ))}
-      </div>
+        </div>
+      ))}
     </div>
+  </div>
+  
   );
 };
 
@@ -153,6 +171,7 @@ const VersionsPage = () => {
   };
 
   return (
+    <div>
     <div className="container py-4">
     {/* Title */}
     <h2 className="text-start mb-4">Versions for {companyName}</h2>
@@ -165,12 +184,20 @@ const VersionsPage = () => {
           className="col-6 col-md-4 col-lg-2 mb-3" 
           onClick={() => handleVersionClick(version)}
         >
-          <div className="card h-100 shadow-sm text-center" style={{ cursor: 'pointer', borderRadius: '10px' }}>
+          <div className="card  shadow-sm text-center"  style={{
+              cursor: 'pointer',
+              borderRadius: '10px',
+              width:'100px',
+              height: '95px', // Reduced card height
+              padding: '5px' // Added padding for spacing
+            }}>
             <img 
               src={version.description} 
               alt={version.versionName} 
               className="card-img-top p-2" 
-              style={{  height: '150px', margin: '0 auto', objectFit: 'contain' }} 
+              style={{    borderRadius: '8px',
+                height: '40px', // Reduced image height
+                objectFit: 'contain' }} 
             />
             <div className="card-body p-2">
               <p className="card-title fw-bold text-dark">{version.versionName}</p>
@@ -179,6 +206,7 @@ const VersionsPage = () => {
         </div>
       ))}
     </div>
+  </div>
   </div>
   );
 };
@@ -217,12 +245,18 @@ const SubVersionsPage = () => {
           onClick={() => handleSubVersionClick(subVersion)}
           style={{ cursor: 'pointer' }}
         >
-          <div className="card h-100 shadow-sm text-center" style={{ borderRadius: '10px' }}>
+          <div className="card  shadow-sm text-center" style={{ cursor: 'pointer',
+              borderRadius: '10px',
+              width:'100px',
+              height: '95px', // Reduced card height
+              padding: '5px' }}>
             <img 
               src={subVersion.description} 
               alt={subVersion.subVersionName} 
               className="card-img-top p-3" 
-              style={{ width: '80px', height: '80px', margin: '0 auto', objectFit: 'contain' }} 
+              style={{   borderRadius: '8px',
+                height: '80px', // Reduced image height
+                objectFit: 'contain' }} 
             />
             <div className="card-body p-2">
               <p className="card-title fw-bold text-dark" style={{ fontSize: '0.9rem' }}>{subVersion.subVersionName}</p>
@@ -309,15 +343,19 @@ const SubVersionsPage = () => {
         {issues.map(issue => (
           <div 
             key={issue.id} 
-            className="col-12 col-md-6 col-lg-4 mb-3"
+            className="col-4 col-md-6 col-lg-4 mb-3"
             onClick={() => handleIssueClick(issue)}
             
             style={{ cursor: 'pointer',borderColor:'orange' }}
           >
-            <div className="card h-100 shadow-lg border-0 text-center" style={{ borderRadius: '15px', overflow: 'hidden' }}>
+            <div className="card  shadow-lg border-0 text-center" style={{cursor: 'pointer',
+              borderRadius: '10px',
+              width:'100px',
+              height: '95px', // Reduced card height
+              padding: '5px' }}>
               <div className="card-body p-4">
-                <h3 className="card-title fw-bold text-dark mb-3" style={{ fontSize: '1.25rem' }}>{issue.issueName}</h3>
-                <p className="card-text text-muted" style={{ height: '100px', overflow: 'hidden', textOverflow: 'ellipsis' }}>{issue.description}</p>
+                <h3 className="card-title fw-bold  mb-3" style={{ fontSize: '0.8rem' }}>{issue.issueName}</h3>
+                <p className="card-text text-muted" style={{ height: '40px', overflow: 'hidden', textOverflow: 'ellipsis' }}>{issue.description}</p>
               </div>
             </div>
           </div>
@@ -375,12 +413,41 @@ const SubVersionsPage = () => {
     };
   
     return (
+      <div>
+         <Row className="text-center my-4">
+  <Col>
+    <Button variant="outline-primary">
+      <img src="https://cdn-icons-png.flaticon.com/128/186/186239.png" alt="Phone" className="me-2" style={{ width: '40px', verticalAlign: 'middle' }} />
+      Buy Phone
+    </Button>
+  </Col>
+  <Col>
+    <Button variant="outline-primary">
+      <img src="https://cdn-icons-png.flaticon.com/128/2704/2704414.png" alt="Laptop" className="me-2" style={{ width: '40px', verticalAlign: 'middle' }} />
+      Buy Laptop
+    </Button>
+  </Col>
+  <Col>
+    <Button variant="outline-primary">
+      <img src="https://cdn-icons-png.flaticon.com/128/644/644425.png" alt="Tablet" className="me-2" style={{ width: '40px', verticalAlign: 'middle' }} />
+      Buy Tablet
+    </Button>
+  </Col>
+ 
+  <Col>
+    <Button variant="outline-primary">
+      <img src="https://cdn-icons-png.flaticon.com/128/9383/9383251.png" alt="Sell Phone" className="me-2" style={{ width: '40px', verticalAlign: 'middle' }} />
+      Sell Phone
+    </Button>
+  </Col>
+</Row>
+<SellPage/>
       <div className="container text-center py-5">
         {/* Main Heading */}
-        <h1 className="mb-4 display-4 fw-bold">Repair Request</h1>
+        <h1 className="mb-4 display-4 fw-bold">Sell Your Phone</h1>
         
         {/* Sub-heading */}
-        <h2 className="mb-5 text-primary">Select a Company</h2>
+        <h2 className="mb-5 text-primary">Select a Brand</h2>
         
         {/* Company Cards */}
         <div className="row">
@@ -390,7 +457,11 @@ const SubVersionsPage = () => {
               className="col-6 col-md-4 col-lg-2 mb-3" 
               onClick={() => handleCompanyClick(company)}
             >
-              <div className="card h-100 shadow-lg" style={{ cursor: 'pointer', borderRadius: '10px' }}>
+              <div className="card  shadow-lg" style={{ cursor: 'pointer',
+              borderRadius: '10px',
+              width:'100px',
+              height: '95px', // Reduced card height
+              padding: '5px' }}>
                 <img 
                   src={company.iconUrl} 
                   alt={company.name} 
@@ -405,6 +476,10 @@ const SubVersionsPage = () => {
             </div>
           ))}
         </div>
+       
+        <SellWhy/>
+      </div>
+      <DownloadAppSection/>
       </div>
     );
   };

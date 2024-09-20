@@ -1,129 +1,248 @@
-import OtpInput from "otp-input-react";
 import { useState } from "react";
 import { auth } from "./firebase";
-import { RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
+import {
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
+  sendPasswordResetEmail
+} from "firebase/auth";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
-  
-  const [otp, setOtp] = useState("");
-  const [ph, setPh] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
-  const [showOTP, setShowOTP] = useState(false);
   const [user, setUser] = useState(null);
+  const [isSignup, setIsSignup] = useState(false); // To toggle between sign up and login
+  const [forgotPassword, setForgotPassword] = useState(false); // For forgot password state
+  const [emailError, setEmailError] = useState(""); // For email validation errors
+  const [bio, setBio] = useState(""); // State for bio or additional text area
+  const navigate=useNavigate();
+  function isValidEmail(email) {
+    // Simple regex for email validation
+    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return regex.test(email);
+  }
 
-  function onCaptchVerify() {
-    if (!window.recaptchaVerifier) {
-      window.recaptchaVerifier = new RecaptchaVerifier(
-        "recaptcha-container",
-        {
-          size: "invisible",
-          callback: (response) => {
-            onSignup();
-          },
-          "expired-callback": () => {},
-        },
-        auth
-      );
+  function onLogin() {
+    if (!isValidEmail(email)) {
+      setEmailError("Invalid email format.");
+      return;
     }
-  }
-
-  function onSignup() {
+    setEmailError("");
     setLoading(true);
-    onCaptchVerify();
 
-    const appVerifier = window.recaptchaVerifier;
-
-    const formatPh = "+" + ph;
-
-    signInWithPhoneNumber(auth, formatPh, appVerifier)
-      .then((confirmationResult) => {
-        window.confirmationResult = confirmationResult;
-        setLoading(false);
-        setShowOTP(true);
-        alert("OTP sent successfully!"); // Replaced toast with alert
-      })
-      .catch((error) => {
-        console.log(error);
-        setLoading(false);
-      });
-  }
-
-  function onOTPVerify() {
-    setLoading(true);
-    window.confirmationResult
-      .confirm(otp)
-      .then(async (res) => {
-        console.log(res);
+    signInWithEmailAndPassword(auth, email, password)
+      .then((res) => {
         setUser(res.user);
         setLoading(false);
+        alert("Login Successful!");
+        navigate('/');
       })
       .catch((err) => {
         console.log(err);
         setLoading(false);
+        if (err.code === 'auth/user-not-found') {
+          setEmailError("Email not registered.");
+        } else {
+          setEmailError("Login failed. Please try again.");
+        }
+      });
+  }
+
+  function onSignup() {
+    if (!isValidEmail(email)) {
+      setEmailError("Invalid email format.");
+      return;
+    }
+    setEmailError("");
+    setLoading(true);
+
+    createUserWithEmailAndPassword(auth, email, password)
+      .then((res) => {
+        setUser(res.user);
+        setLoading(false);
+        alert("Signup Successful!");
+        navigate('/');
+      })
+      .catch((err) => {
+        console.log(err);
+        setLoading(false);
+        if (err.code === 'auth/email-already-in-use') {
+          setEmailError("Email is already registered.");
+        } else {
+          setEmailError("Signup failed. Please try again.");
+        }
+      });
+  }
+
+  function onForgotPassword() {
+    if (!isValidEmail(email)) {
+      setEmailError("Invalid email format.");
+      return;
+    }
+    setEmailError("");
+    setLoading(true);
+
+    sendPasswordResetEmail(auth, email)
+      .then(() => {
+        setLoading(false);
+        alert("Password reset email sent!");
+        setForgotPassword(false); // Optionally return to login/signup form
+      })
+      .catch((err) => {
+        console.log(err);
+        setLoading(false);
+        if (err.code === 'auth/user-not-found') {
+          setEmailError("Email not registered.");
+        } else {
+          setEmailError("Failed to send reset email. Please try again.");
+        }
       });
   }
 
   return (
     <section className="bg-emerald-500 flex items-center justify-center h-screen">
       <div>
-        <div id="recaptcha-container"></div>
         {user ? (
           <h2 className="text-center text-white font-medium text-2xl">
-            👍Login Success
+            👍 {isSignup ? "Signup" : "Login"} Success
+
           </h2>
         ) : (
-          <div className="w-80 flex flex-col gap-4 rounded-lg p-4">
+          <div className="w-80 flex flex-col gap-2 rounded-lg p-4">
             <h1 className="text-center leading-normal text-white font-medium text-3xl mb-6">
-              Welcome to <br /> Fix Yantra
+              Welcome to FixYantra
             </h1>
-            {showOTP ? (
+            {forgotPassword ? (
               <>
                 <label
-                  htmlFor="otp"
+                  htmlFor="email"
                   className="font-bold text-xl text-white text-center"
                 >
-                  Enter your OTP
+                  Enter your Email
                 </label>
-                <OtpInput
-                  value={otp}
-                  onChange={setOtp}
-                  OTPLength={6}
-                  otpType="number"
-                  disabled={false}
-                  autoFocus
-                  className="opt-container "
-                ></OtpInput>
+                <input
+                  type="email"
+                  id="email"
+                  placeholder="Enter email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="w-full p-2 rounded mb-2" // Reduced margin-bottom
+                />
+                {emailError && (
+                  <p className="text-red-500 text-center">{emailError}</p>
+                )}
                 <button
-                  onClick={onOTPVerify}
+                  onClick={onForgotPassword}
                   className="bg-emerald-600 w-full flex gap-1 items-center justify-center py-2.5 text-white rounded"
                 >
-                  {loading && <span>Loading...</span>} {/* Updated loader */}
-                  <span>Verify OTP</span>
+                  {loading && <span>Loading...</span>}
+                  <span>Send Password Reset Email</span>
                 </button>
+                <div className="text-white text-center mt-2">
+                  <p>
+                    Remembered your password?{" "}
+                    <button
+                      className="underline"
+                      onClick={() => setForgotPassword(false)}
+                    >
+                      Login here
+                    </button>
+                  </p>
+                </div>
               </>
             ) : (
               <>
                 <label
-                  htmlFor="phone"
+                  htmlFor="email"
                   className="font-bold text-xl text-white text-center"
                 >
-                  Verify your phone number
+                  Enter your Email
                 </label>
                 <input
-                  type="text"
-                  id="phone"
-                  placeholder="Enter phone number"
-                  value={ph}
-                  onChange={(e) => setPh(e.target.value)}
-                  className="w-full p-2 rounded"
+                  type="email"
+                  id="email"
+                  placeholder="Enter email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="w-full p-2 rounded mb-2" // Reduced margin-bottom
                 />
+                {emailError && (
+                  <p className="text-red-500 text-center">{emailError}</p>
+                )}
+                <label
+                  htmlFor="password"
+                  className="font-bold text-xl text-white text-center"
+                >
+                 
+                </label>
+                <input
+                  type="password"
+                  id="password"
+                  placeholder="Enter password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="w-full p-2 rounded mb-2" // Reduced margin-bottom
+                />
+                {isSignup && (
+                  <>
+                    <label
+                      htmlFor="bio"
+                      className="font-bold text-xl text-white text-center"
+                    >
+                      Bio (optional)
+                    </label>
+                    <textarea
+                      id="bio"
+                      placeholder="Enter your bio"
+                      value={bio}
+                      onChange={(e) => setBio(e.target.value)}
+                      className="w-full p-2 rounded mb-2"
+                    />
+                  </>
+                )}
                 <button
-                  onClick={onSignup}
+                  onClick={isSignup ? onSignup : onLogin}
                   className="bg-emerald-600 w-full flex gap-1 items-center justify-center py-2.5 text-white rounded"
                 >
-                  {loading && <span>Loading...</span>} {/* Updated loader */}
-                  <span>Send code via SMS</span>
+                  {loading && <span>Loading...</span>}
+                  <span>{isSignup ? "Signup" : "Login"}</span>
                 </button>
+
+                {!isSignup && (
+                  <div className="text-white text-center mt-2">
+                    <p>
+                      <button
+                        className="underline"
+                        onClick={() => setForgotPassword(true)}
+                      >
+                        Forgot Password?
+                      </button>
+                    </p>
+                    <p>
+                      Don't have an account?{" "}
+                      <button
+                        className="underline"
+                        onClick={() => setIsSignup(true)}
+                      >
+                        Signup here
+                      </button>
+                    </p>
+                  </div>
+                )}
+                {isSignup && (
+                  <div className="text-white text-center mt-2">
+                    <p>
+                      Already have an account?{" "}
+                      <button
+                        className="underline"
+                        onClick={() => setIsSignup(false)}
+                      >
+                        Login here
+                      </button>
+                    </p>
+                  </div>
+                )}
               </>
             )}
           </div>
