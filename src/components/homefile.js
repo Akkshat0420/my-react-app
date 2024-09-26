@@ -19,65 +19,66 @@ const HomePage = () => {
   return (
     <div>
   <div className="container py-5">
-  <div className="row justify-content-center">
-    {/* Card 1: Choose Brand */}
-    <div className="col-md-4 d-flex justify-content-center mb-4">
-      <div className="card text-center" style={{ width: "12rem" }}>
-        <img
-          src="Arepa.jpg" // Add your small image here
-          alt="Brand"
-          className="img-fluid mx-auto mt-3 rounded"
-          style={{ width: "50px", height: "50px" }} // Control image size
-        />
-        <div className="card-body">
-          <h5 className="card-title">Repair</h5>
-          
-          <button className="btn btn-secondary" onClick={handleBrandSelection}>
-            Select Brand
-          </button>
+  
+
+        {/* Card 3: Sell Phone */}
+        <h3 className="text-center mb-4">Choose an Action</h3>
+      
+      <div className="row ">
+        {/* Card 1: Repair */}
+        <div className="col-6 col-sm-4 col-md-3 col-lg-2 d-flex justify-content-center mb-3">
+          <div className="card text-center shadow" style={{ width: "10rem", border: "none" }}>
+            <img
+              src="Arepa.jpg"
+              alt="Repair"
+              className="img-fluid mx-auto mt-3 rounded"
+              style={{ width: "45px", height: "45px" }} // Control image size
+            />
+            <div className="card-body p-2">
+              <h5 className="card-title" style={{ fontSize: "1rem", color: "#343a40" }}>Repair</h5>
+              <button className="btn btn-outline-secondary btn-sm" onClick={handleBrandSelection}>
+                Select Brand
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {/* Card 2: Buy Phone */}
+        <div className="col-6 col-sm-4 col-md-3 col-lg-2 d-flex justify-content-center mb-3">
+          <div className="card text-center shadow" style={{ width: "10rem", border: "none" }}>
+            <img
+              src="https://example.com/action-image.jpg"
+              alt="Buy"
+              className="img-fluid mx-auto mt-3 rounded"
+              style={{ width: "45px", height: "45px" }}
+            />
+            <div className="card-body p-2">
+              <h5 className="card-title" style={{ fontSize: "1rem", color: "#343a40" }}>Buy Phone</h5>
+              <button className="btn btn-outline-secondary btn-sm" onClick={handleSellAction}>
+                Buy Now
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {/* Card 3: Sell Phone */}
+        <div className="col-6 col-sm-4 col-md-3 col-lg-2 d-flex justify-content-center mb-3">
+          <div className="card text-center shadow" style={{ width: "10rem", border: "none" }}>
+            <img
+              src="https://s3no.cashify.in/builder/81c3c74f0683463da548ae2cbe1fec28.webp?p=default&s=lg"
+              alt="Sell"
+              className="img-fluid mx-auto mt-3 rounded"
+              style={{ width: "45px", height: "45px" }}
+            />
+            <div className="card-body p-2">
+              <h5 className="card-title" style={{ fontSize: "1rem", color: "#343a40" }}>Sell Phone</h5>
+              <button className="btn btn-outline-secondary btn-sm" onClick={handleSell}>
+                Sell Now
+              </button>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-
-    {/* Card 2: Other Action */}
-    <div className="col-md-4 d-flex justify-content-center mb-4">
-      <div className="card text-center" style={{ width: "12rem" }}>
-        <img
-          src="https://example.com/action-image.jpg" // Add your small image here
-          alt="Action"
-          className="img-fluid mx-auto mt-3"
-          style={{ width: "50px", height: "50px" }} // Control image size
-        />
-        <div className="card-body">
-          <h5 className="card-title">Buy Phone</h5>
-         
-          <button className="btn btn-secondary" onClick={handleSellAction}>
-            Buy Now
-          </button>
-        </div>
-      </div>
-    </div>
-
-    {/* Card 3: Sell */}
-    <div className="col-md-4 d-flex justify-content-center mb-4">
-      <div className="card text-center" style={{ width: "12rem" }}>
-        <img
-          src="	https://s3no.cashify.in/builder/81c3c74f0683463da548ae2cbe1fec28.webp?p=default&s=lg" // Add your small image here
-          alt="Sell"
-          className="img-fluid mx-auto mt-3"
-          style={{ width: "50px", height: "50px" }} // Control image size
-        />
-        <div className="card-body">
-          <h5 className="card-title">Sell Phone</h5>
-          
-          <button className="btn btn-secondary" onClick={handleSell}>
-            Sell Now
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
-
 
    
 

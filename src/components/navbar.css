@@ -56,3 +56,20 @@
     margin-top: 10px;
   }
 }
+.suggestions-dropdown .list-group-item:hover {
+  background-color: #f8f9fa;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .search-container {
+    max-width: 100%;
+    margin-right: 50px;
+    margin-top: 10px;
+    justify-content: center;
+  }
+
+  .navbar-brand {
+    justify-content: center;
+  }
+}

@@ -104,51 +104,38 @@ const CompaniesPage = () => {
   };
 
   return (
-    <div className="container text-center py-5">
+    <div className="container text-center py-3">
     {/* Main Heading */}
     <img src="Picsart-1.jpg" alt="" className="object-cover rounded" />
-    <h1 className="mb-4 display-4 fw-bold">Repair Request</h1>
+    <h3 className="mb-4  ">Repair Request</h3>
   
     {/* Sub-heading */}
-    <h2 className="mb-5 text-primary">Choose Brand</h2>
+    <h4 className="mb-5 text-primary">Choose Brand</h4>
   
     {/* Company Cards */}
-    <div className="row">
-      {companies.map(company => (
-        <div
-          key={company.id}
-          className="col-4 col-md-3 col-lg-2 mb-2" // Reduced column size on medium screens
-          onClick={() => handleCompanyClick(company)}
-        >
-          <div
-            className="card shadow-lg"
-            style={{
-              cursor: 'pointer',
-              borderRadius: '10px',
-              width:'100px',
-              height: '95px', // Reduced card height
-              padding: '5px' // Added padding for spacing
-            }}
-          >
-            <img
-              src={company.iconUrl}
-              alt={company.name}
-              className="card-img-top p-1"
-              style={{
-                borderRadius: '8px',
-                height: '40px', // Reduced image height
-                objectFit: 'contain'
-              }}
-            />
-            <div className="card-body p-2">
-              <h6 className="card-title text-dark">{company.name}</h6> {/* Reduced font size */}
-            </div>
-          </div>
-        </div>
-      ))}
-    </div>
-  </div>
-  
+   
+  <div className="row">
+   {companies.map(company => (
+   <div  key={company.id}  onClick={() => handleCompanyClick(company)} className="col-6 col-sm-4 col-md-3 col-lg-2 d-flex justify-content-center mb-3">
+   <div className="card text-center shadow" style={{ width: "10rem", border: "none" }}>
+     <img
+       src={company.iconUrl}
+       alt="Repair"
+       className="img-fluid mx-auto mt-3 rounded"
+       style={{ width: "45px", height: "45px" }} // Control image size
+     />
+     <div className="card-body p-2">
+       <h5 className="card-title" style={{ fontSize: "1rem", color: "#343a40" }}>{company.name}</h5>
+       
+        
+      
+     </div>
+     </div>
+     
+   </div>
+   ))}
+ </div>
+</div>
   );
 };
 
@@ -178,33 +165,25 @@ const VersionsPage = () => {
     
     {/* Version Cards */}
     <div className="row">
-      {versions.map(version => (
-        <div 
-          key={version.id} 
-          className="col-6 col-md-4 col-lg-2 mb-3" 
-          onClick={() => handleVersionClick(version)}
-        >
-          <div className="card  shadow-sm text-center"  style={{
-              cursor: 'pointer',
-              borderRadius: '10px',
-              width:'100px',
-              height: '95px', // Reduced card height
-              padding: '5px' // Added padding for spacing
-            }}>
-            <img 
-              src={version.description} 
-              alt={version.versionName} 
-              className="card-img-top p-2" 
-              style={{    borderRadius: '8px',
-                height: '40px', // Reduced image height
-                objectFit: 'contain' }} 
-            />
-            <div className="card-body p-2">
-              <p className="card-title fw-bold text-dark">{version.versionName}</p>
-            </div>
-          </div>
-        </div>
-      ))}
+    {versions.map(version => (
+   <div  key={version.id}  onClick={() => handleVersionClick(version)} className="col-6 col-sm-4 col-md-3 col-lg-2 d-flex justify-content-center mb-3">
+   <div className="card text-center shadow" style={{ width: "10rem", border: "none" }}>
+     <img
+       src={version.description}
+       alt="Repair"
+       className="img-fluid mx-auto mt-3 rounded"
+       style={{ width: "45px", height: "45px" }} // Control image size
+     />
+     <div className="card-body p-2">
+       <h5 className="card-title" style={{ fontSize: "1rem", color: "#343a40" }}>{version.versionName}</h5>
+       
+        
+      
+     </div>
+     </div>
+     
+   </div>
+   ))}
     </div>
   </div>
   </div>
@@ -451,30 +430,25 @@ const SubVersionsPage = () => {
         
         {/* Company Cards */}
         <div className="row">
-          {companies.map(company => (
-            <div 
-              key={company.id} 
-              className="col-6 col-md-4 col-lg-2 mb-3" 
-              onClick={() => handleCompanyClick(company)}
-            >
-              <div className="card  shadow-lg" style={{ cursor: 'pointer',
-              borderRadius: '10px',
-              width:'100px',
-              height: '95px', // Reduced card height
-              padding: '5px' }}>
-                <img 
-                  src={company.iconUrl} 
-                  alt={company.name} 
-                  className="card-img-top p-3" 
-                  style={{ borderRadius: '10px', height: '100px', objectFit: 'contain' }} 
-                  
-                />
-                <div className="card-body">
-                  <h5 className="card-title text-dark">{company.name}</h5>
-                </div>
-              </div>
-            </div>
-          ))}
+        {companies.map(company => (
+   <div  key={company.id}  onClick={() => handleCompanyClick(company)} className="col-6 col-sm-4 col-md-3 col-lg-2 d-flex justify-content-center mb-3">
+   <div className="card text-center shadow" style={{ width: "10rem", border: "none" }}>
+     <img
+       src={company.iconUrl}
+       alt="Repair"
+       className="img-fluid mx-auto mt-3 rounded"
+       style={{ width: "45px", height: "45px" }} // Control image size
+     />
+     <div className="card-body p-2">
+       <h5 className="card-title" style={{ fontSize: "1rem", color: "#343a40" }}>{company.name}</h5>
+       
+        
+      
+     </div>
+     </div>
+     
+   </div>
+   ))}
         </div>
        
         <SellWhy/>
@@ -509,25 +483,25 @@ const SubVersionsPage = () => {
       
       {/* Version Cards */}
       <div className="row">
-        {versions.map(version => (
-          <div 
-            key={version.id} 
-            className="col-6 col-md-4 col-lg-2 mb-3" 
-            onClick={() => handleVersionClick(version)}
-          >
-            <div className="card h-100 shadow-sm text-center" style={{ cursor: 'pointer', borderRadius: '10px' }}>
-              <img 
-                src={version.description} 
-                alt={version.versionName} 
-                className="card-img-top p-2" 
-                style={{  height: '150px', margin: '0 auto', objectFit: 'contain' }} 
-              />
-              <div className="card-body p-2">
-                <p className="card-title fw-bold text-dark">{version.versionName}</p>
-              </div>
-            </div>
-          </div>
-        ))}
+      {versions.map(version => (
+   <div  key={version.id}  onClick={() => handleVersionClick(version)} className="col-6 col-sm-4 col-md-3 col-lg-2 d-flex justify-content-center mb-3">
+   <div className="card text-center shadow" style={{ width: "10rem", border: "none" }}>
+     <img
+       src={version.description}
+       alt="Repair"
+       className="img-fluid mx-auto mt-3 rounded"
+       style={{ width: "45px", height: "45px" }} // Control image size
+     />
+     <div className="card-body p-2">
+       <h5 className="card-title" style={{ fontSize: "1rem", color: "#343a40" }}>{version.versionName}</h5>
+       
+        
+      
+     </div>
+     </div>
+     
+   </div>
+   ))}
       </div>
     </div>
     );
@@ -569,26 +543,25 @@ const SubVersionsPage = () => {
       <div className="container py-4">
         <h2 className="text-center mb-4">SubVersions for {versionName}</h2>
         <div className="row">
-          {subVersions.map(subVersion => (
-            <div 
-              key={subVersion.id} 
-              className="col-6 col-md-4 col-lg-2 mb-4" 
-              onClick={() => handleSubVersionClick(subVersion)} // Navigate on click
-              style={{ cursor: 'pointer' }}
-            >
-              <div className="card h-100 shadow-sm text-center" style={{ borderRadius: '10px' }}>
-                <img 
-                  src={subVersion.description} 
-                  alt={subVersion.subVersionName} 
-                  className="card-img-top p-3" 
-                  style={{ width: '80px', height: '80px', margin: '0 auto', objectFit: 'contain' }} 
-                />
-                <div className="card-body p-2">
-                  <p className="card-title fw-bold text-dark" style={{ fontSize: '0.9rem' }}>{subVersion.subVersionName}</p>
-                </div>
-              </div>
-            </div>
-          ))}
+        {subVersions.map(subversion => (
+   <div  key={subversion.id}  onClick={() => handleSubVersionClick(subversion)} className="col-6 col-sm-4 col-md-3 col-lg-2 d-flex justify-content-center mb-3">
+   <div className="card text-center shadow" style={{ width: "10rem", border: "none" }}>
+     <img
+       src={subversion.description}
+       alt="Repair"
+       className="img-fluid mx-auto mt-3 rounded"
+       style={{ width: "45px", height: "45px" }} // Control image size
+     />
+     <div className="card-body p-2">
+       <h5 className="card-title" style={{ fontSize: "1rem", color: "#343a40" }}>{subversion.subVersionName}</h5>
+       
+        
+      
+     </div>
+     </div>
+     
+   </div>
+   ))}
         </div>
       </div>
     );
@@ -605,10 +578,10 @@ const SubVersionsPage = () => {
     return (
       <div className="container text-center py-5">
         {/* Heading */}
-        <h1 className="mb-4 display-4 fw-bold">Select Storage Option</h1>
+        <h3 className="mb-4  ">Select Storage Option</h3>
         
         {/* Subheading with selected Subversion name */}
-        <h2 className="mb-5 text-primary">Subversion: {subVersionName}</h2>
+        <h4 className="mb-5 text-primary">Subversion: {subVersionName}</h4>
         
         {/* Storage Buttons */}
         <div className="row justify-content-center">

@@ -36,7 +36,7 @@ const AllBrands = () => {
         <Top/>
         <div className="container my-5">
           {/* Smartphone Brands Section */}
-          <h2 className="mb-4 text-primary">Smartphone Brands</h2>
+          <h3 className="mb-4 text-primary">Smartphone Brands</h3>
           <div className="row">
             {smartphoneBrands.map((brand) => (
               <div className="col-6 col-md-2 mb-4" key={brand.name}>
@@ -49,7 +49,7 @@ const AllBrands = () => {
                     src={brand.imageUrl}
                     className="card-img-top"
                     alt={brand.name}
-                    style={{height: '120px',width:'120px',  objectFit: 'cover',verticalAlign:'middle' }}
+                    style={{height: '45px',width:'45px',  objectFit: 'cover',verticalAlign:'middle' }}
                   />
                   
                 </div>
@@ -58,7 +58,7 @@ const AllBrands = () => {
           </div>
   
           {/* Laptop Brands Section */}
-          <h2 className="mt-5 mb-4 text-primary">Laptop Brands</h2>
+          <h3 className="mt-5 mb-4 text-primary">Laptop Brands</h3>
           <div className="row">
             {laptopBrands.map((brand) => (
               <div className="col-4 col-md-2 mb-4" key={brand.name}>
@@ -75,7 +75,7 @@ const AllBrands = () => {
                     src={brand.imageUrl}
                     className="card-img-top"
                     alt={brand.name}
-                    style={{ height: '60px',  objectFit: 'cover',padding:'10px' }}
+                    style={{ height: '45px',width:'45px' , objectFit: 'cover',padding:'10px' }}
                   />
                   
                 </div>
