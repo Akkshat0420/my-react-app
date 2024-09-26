@@ -41,7 +41,7 @@ const FixYantraNavbar = () => {
               flexGrow: 1,
               Width: '900px',
               marginLeft: '120px',
-              marginRight: '20px',
+             
             }}
           >
             <FormControl
@@ -67,7 +67,7 @@ const FixYantraNavbar = () => {
           <Button
             variant="outline-dark"
             style={{
-              marginLeft:'170px',
+              
               marginRight:'100px',
               borderColor: 'orange',
               color: 'orange',
