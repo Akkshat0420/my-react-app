@@ -43,13 +43,16 @@ const AllBrands = () => {
                 <div
                   className="card h-100 shadow-sm"
                   onClick={() => handleBrandClick('Smartphone', brand.name)}
-                  style={{ cursor: 'pointer' }}
+                  style={{ cursor: 'pointer' ,borderRadius: '10px',
+                    width:'100px',
+                    height: '95px', // Reduced card height
+                    padding: '5px'}}
                 >
                   <img
                     src={brand.imageUrl}
                     className="card-img-top"
                     alt={brand.name}
-                    style={{height: '45px',width:'45px',  objectFit: 'cover',verticalAlign:'middle' }}
+                    style={{height: '75px',width:'75px',  objectFit: 'cover',padding:'10px' }}
                   />
                   
                 </div>
@@ -75,7 +78,7 @@ const AllBrands = () => {
                     src={brand.imageUrl}
                     className="card-img-top"
                     alt={brand.name}
-                    style={{ height: '45px',width:'45px' , objectFit: 'cover',padding:'10px' }}
+                    style={{ height: '75px',width:'75px' , objectFit: 'cover',padding:'10px' }}
                   />
                   
                 </div>

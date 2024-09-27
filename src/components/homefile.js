@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import About from './BookingForm';
 import Issue from './issuefile';
 import DownloadAppSection from './dowlodapp';
+import FAQ from '../refurbished/whyus';
 //import { Carousel } from 'react-bootstrap';
 const HomePage = () => {
   const navigate = useNavigate();
@@ -22,7 +23,7 @@ const HomePage = () => {
   
 
         {/* Card 3: Sell Phone */}
-        <h3 className="text-center mb-4">Choose an Action</h3>
+        <h3 className="text-center mb-4" style={{color:'orange'}}>Choose an Action</h3>
       
       <div className="row ">
         {/* Card 1: Repair */}
@@ -36,7 +37,7 @@ const HomePage = () => {
             />
             <div className="card-body p-2">
               <h5 className="card-title" style={{ fontSize: "1rem", color: "#343a40" }}>Repair</h5>
-              <button className="btn btn-outline-secondary btn-sm" onClick={handleBrandSelection}>
+              <button className="btn btn-outline-secondary btn-sm" style={{ fontSize: "1rem", color: "orange" }} onClick={handleBrandSelection}>
                 Select Brand
               </button>
             </div>
@@ -47,7 +48,7 @@ const HomePage = () => {
         <div className="col-6 col-sm-4 col-md-3 col-lg-2 d-flex justify-content-center mb-3">
           <div className="card text-center shadow" style={{ width: "10rem", border: "none" }}>
             <img
-              src="https://example.com/action-image.jpg"
+              src="https://s3no.cashify.in/builder/caa3a1efa51541a5aa37fd292790ea81.webp?p=default&s=lg"
               alt="Buy"
               className="img-fluid mx-auto mt-3 rounded"
               style={{ width: "45px", height: "45px" }}
@@ -129,6 +130,9 @@ const HomePage = () => {
       </div>
       <Issue/>
       <DownloadAppSection/>
+      <FAQ/>
+      <img src="https://ovantica.com/assets/images/env-banner.jpeg
+" alt="" />
       <About />
     </div>
     </div>

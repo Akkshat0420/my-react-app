@@ -10,9 +10,9 @@ const Issue = () => {
   const issues = [
     { issueName: 'Battery', imageUrl: 'https://cdn-icons-png.flaticon.com/128/2333/2333689.png' },
     { issueName: 'Mic', imageUrl: 'https://cdn-icons-png.flaticon.com/128/2061/2061145.png' },
-    { issueName: 'Issue 3', imageUrl: '/path/to/image3.jpg' },
-    { issueName: 'Issue 4', imageUrl: '/path/to/image4.jpg' },
-    { issueName: 'Issue 5', imageUrl: '/path/to/image5.jpg' },
+    { issueName: 'Camera', imageUrl: 'https://cdn-icons-png.flaticon.com/128/1042/1042339.png' },
+    { issueName: 'Jack', imageUrl: 'https://cdn-icons-png.flaticon.com/128/4044/4044658.png' },
+    { issueName: 'Screen', imageUrl: 'https://cdn-icons-png.flaticon.com/128/14821/14821927.png' },
     // Add more issues as needed
   ];
 
@@ -22,7 +22,7 @@ const Issue = () => {
 
   return (
     <div className="container py-4">
-      <h2 className="text-center mb-4 text-primary">Our Repair Services</h2>
+      <h2 className="text-center mb-4 text-primary " style={{color:'orange'}}>Our Repair Services</h2>
       <div className="issues-container">
         {issues.map(issue => (
           <div
