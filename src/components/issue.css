@@ -1,0 +1,28 @@
+.issues-container {
+    display: flex;
+    flex-wrap: nowrap; /* Prevents wrapping to a new line */
+    overflow-x: auto; /* Enables horizontal scrolling */
+    padding: 10px 0; /* Adds padding on top and bottom */
+    gap: 15px; /* Adds space between cards */
+    scrollbar-width: thin; /* For Firefox */
+    scrollbar-color: #888 #e0e0e0; /* For Firefox */
+  }
+  
+  .issues-container::-webkit-scrollbar {
+    height: 8px; /* Height of the scrollbar */
+  }
+  
+  .issues-container::-webkit-scrollbar-thumb {
+    background: #888; /* Color of the scrollbar */
+    border-radius: 10px; /* Rounded corners of the scrollbar */
+  }
+  
+  .issues-container::-webkit-scrollbar-track {
+    background: #e0e0e0; /* Color of the scrollbar track */
+    border-radius: 10px; /* Rounded corners of the scrollbar track */
+  }
+  
+  .issue-card {
+    flex: 0 0 auto; /* Prevents flex items from shrinking or growing */
+    min-width: 200px; /* Sets a minimum width for each card */
+  }

@@ -1,93 +1,255 @@
-// src/Login.js
-import React, { useState } from "react";
+import { useState } from "react";
 import { auth } from "./firebase";
-import { Link, useNavigate } from "react-router-dom";
-import { signInWithEmailAndPassword } from "firebase/auth";
-import Signup from "./signup";
+import {
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
+  sendPasswordResetEmail
+} from "firebase/auth";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
-  
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [user, setUser] = useState(null);
+  const [isSignup, setIsSignup] = useState(false); // To toggle between sign up and login
+  const [forgotPassword, setForgotPassword] = useState(false); // For forgot password state
+  const [emailError, setEmailError] = useState(""); // For email validation errors
+  const [bio, setBio] = useState(""); // State for bio or additional text area
   const navigate=useNavigate();
-  const handleLogin = async (e) => {
-    e.preventDefault();
-    try {
-      await signInWithEmailAndPassword(auth, email, password);
-      alert("Login successful!");
-      navigate('/');
-    } catch (e) {
-      setError(error.message);
+  function isValidEmail(email) {
+    // Simple regex for email validation
+    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return regex.test(email);
+  }
+
+  function onLogin() {
+    if (!isValidEmail(email)) {
+      setEmailError("Invalid email format.");
+      return;
     }
-  };
+    setEmailError("");
+    setLoading(true);
+
+    signInWithEmailAndPassword(auth, email, password)
+      .then((res) => {
+        setUser(res.user);
+        setLoading(false);
+        alert("Login Successful!");
+        navigate('/');
+      })
+      .catch((err) => {
+        console.log(err);
+        setLoading(false);
+        if (err.code === 'auth/user-not-found') {
+          setEmailError("Email not registered.");
+        } else {
+          setEmailError("Login failed. Please try again.");
+        }
+      });
+  }
+
+  function onSignup() {
+    if (!isValidEmail(email)) {
+      setEmailError("Invalid email format.");
+      return;
+    }
+    setEmailError("");
+    setLoading(true);
+
+    createUserWithEmailAndPassword(auth, email, password)
+      .then((res) => {
+        setUser(res.user);
+        setLoading(false);
+        alert("Signup Successful!");
+        navigate('/');
+      })
+      .catch((err) => {
+        console.log(err);
+        setLoading(false);
+        if (err.code === 'auth/email-already-in-use') {
+          setEmailError("Email is already registered.");
+        } else {
+          setEmailError("Signup failed. Please try again.");
+        }
+      });
+  }
+
+  function onForgotPassword() {
+    if (!isValidEmail(email)) {
+      setEmailError("Invalid email format.");
+      return;
+    }
+    setEmailError("");
+    setLoading(true);
+
+    sendPasswordResetEmail(auth, email)
+      .then(() => {
+        setLoading(false);
+        alert("Password reset email sent!");
+        setForgotPassword(false); // Optionally return to login/signup form
+      })
+      .catch((err) => {
+        console.log(err);
+        setLoading(false);
+        if (err.code === 'auth/user-not-found') {
+          setEmailError("Email not registered.");
+        } else {
+          setEmailError("Failed to send reset email. Please try again.");
+        }
+      });
+  }
 
   return (
-    
-    <div style={styles.container}>
-      <div style={styles.loginBox}>
-        <h2>Login</h2>
-        <form onSubmit={handleLogin} style={styles.form}>
-          <input
-            type="email"
-            placeholder="Email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            style={styles.input}
-            required
-          />
-          <input
-            type="password"
-            placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            style={styles.input}
-            required
-          />
-          <button type="submit" style={styles.button}>Login</button>
-        </form>
-        <p>Don't have an account? <Link to ={Signup}>Sign up</Link></p>
-      </div>
-    </div>
-  );
-};
+    <section className="bg-emerald-500 flex items-center justify-center h-screen">
+      <div>
+        {user ? (
+          <h2 className="text-center text-white font-medium text-2xl">
+            👍 {isSignup ? "Signup" : "Login"} Success
 
-const styles = {
-  container: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    height: '100vh', // Full viewport height
-    backgroundColor: '#f0f0f0', // Adjust background color as needed
-  },
-  loginBox: {
-    padding: '20px',
-    backgroundColor: '#fff',
-    borderRadius: '8px',
-    boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
-    textAlign: 'center',
-    width: '300px',
-  },
-  form: {
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '15px',
-  },
-  input: {
-    padding: '10px',
-    fontSize: '16px',
-    borderRadius: '4px',
-    border: '1px solid #ccc',
-  },
-  button: {
-    padding: '10px',
-    fontSize: '16px',
-    backgroundColor: '#007BFF',
-    color: '#fff',
-    border: 'none',
-    borderRadius: '4px',
-    cursor: 'pointer',
-  },
+          </h2>
+        ) : (
+          <div className="w-80 flex flex-col gap-2 rounded-lg p-4">
+            <h1 className="text-center leading-normal text-white font-medium text-3xl mb-6">
+              Welcome to FixYantra
+            </h1>
+            {forgotPassword ? (
+              <>
+                <label
+                  htmlFor="email"
+                  className="font-bold text-xl text-white text-center"
+                >
+                  Enter your Email
+                </label>
+                <input
+                  type="email"
+                  id="email"
+                  placeholder="Enter email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="w-full p-2 rounded mb-2" // Reduced margin-bottom
+                />
+                {emailError && (
+                  <p className="text-red-500 text-center">{emailError}</p>
+                )}
+                <button
+                  onClick={onForgotPassword}
+                  className="bg-emerald-600 w-full flex gap-1 items-center justify-center py-2.5 text-white rounded"
+                >
+                  {loading && <span>Loading...</span>}
+                  <span>Send Password Reset Email</span>
+                </button>
+                <div className="text-white text-center mt-2">
+                  <p>
+                    Remembered your password?{" "}
+                    <button
+                      className="underline"
+                      onClick={() => setForgotPassword(false)}
+                    >
+                      Login here
+                    </button>
+                  </p>
+                </div>
+              </>
+            ) : (
+              <>
+                <label
+                  htmlFor="email"
+                  className="font-bold text-xl text-white text-center"
+                >
+                  Enter your Email
+                </label>
+                <input
+                  type="email"
+                  id="email"
+                  placeholder="Enter email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="w-full p-2 rounded mb-2" // Reduced margin-bottom
+                />
+                {emailError && (
+                  <p className="text-red-500 text-center">{emailError}</p>
+                )}
+                <label
+                  htmlFor="password"
+                  className="font-bold text-xl text-white text-center"
+                >
+                 
+                </label>
+                <input
+                  type="password"
+                  id="password"
+                  placeholder="Enter password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="w-full p-2 rounded mb-2" // Reduced margin-bottom
+                />
+                {isSignup && (
+                  <>
+                    <label
+                      htmlFor="bio"
+                      className="font-bold text-xl text-white text-center"
+                    >
+                      Bio (optional)
+                    </label>
+                    <textarea
+                      id="bio"
+                      placeholder="Enter your bio"
+                      value={bio}
+                      onChange={(e) => setBio(e.target.value)}
+                      className="w-full p-2 rounded mb-2"
+                    />
+                  </>
+                )}
+                <button
+                  onClick={isSignup ? onSignup : onLogin}
+                  className="bg-emerald-600 w-full flex gap-1 items-center justify-center py-2.5 text-white rounded"
+                >
+                  {loading && <span>Loading...</span>}
+                  <span>{isSignup ? "Signup" : "Login"}</span>
+                </button>
+
+                {!isSignup && (
+                  <div className="text-white text-center mt-2">
+                    <p>
+                      <button
+                        className="underline"
+                        onClick={() => setForgotPassword(true)}
+                      >
+                        Forgot Password?
+                      </button>
+                    </p>
+                    <p>
+                      Don't have an account?{" "}
+                      <button
+                        className="underline"
+                        onClick={() => setIsSignup(true)}
+                      >
+                        Signup here
+                      </button>
+                    </p>
+                  </div>
+                )}
+                {isSignup && (
+                  <div className="text-white text-center mt-2">
+                    <p>
+                      Already have an account?{" "}
+                      <button
+                        className="underline"
+                        onClick={() => setIsSignup(false)}
+                      >
+                        Login here
+                      </button>
+                    </p>
+                  </div>
+                )}
+              </>
+            )}
+          </div>
+        )}
+      </div>
+    </section>
+  );
 };
 
 export default Login;

@@ -1,0 +1,75 @@
+.nav__menu {
+  display: flex;
+  align-items: center;
+  gap: 2rem; /* Adds space between the links */
+}
+
+/* Custom Styles for the Navbar Links */
+.nav__link {
+  font-size: 1.2rem; /* Larger text for the links */
+  color: #ffffff; /* White text color */
+  padding: 0.5rem 1rem; /* Padding around the links */
+  border-radius: 5px; /* Rounded corners */
+  transition: background 0.3s ease-in-out, color 0.3s ease-in-out;
+  text-decoration: none;
+}
+.navbar-custom {
+  background: linear-gradient(to right, #ff7e5f, #feb47b); /* Gradient colors */
+}
+
+.navbar-brand,
+.nav-link {
+  color: #ffffff !important; /* Ensure text color is white */
+}
+
+.nav-link:hover {
+  color: #ffd700 !important; 
+  text-decoration: none;/* Hover color for nav links */
+}
+.search-input-wrapper {
+  position: relative;
+  width: 600px; /* Increase the width as needed */
+}
+
+.search-input {
+  width: 100%;
+  padding-left: 40px; /* Make space for the icon */
+}
+
+.search-icon {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: gray;
+}
+
+@media (max-width: 768px) {
+  .search-input-wrapper {
+    width: 100%; /* On smaller screens, make the search bar full-width */
+    margin-top: 10px;
+  }
+}
+@media (max-width: 468px) {
+  .search-input-wrapper {
+    width: 70%; /* On smaller screens, make the search bar full-width */
+    margin-top: 10px;
+  }
+}
+.suggestions-dropdown .list-group-item:hover {
+  background-color: #f8f9fa;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .search-container {
+    max-width: 100%;
+    margin-right: 50px;
+    margin-top: 10px;
+    justify-content: center;
+  }
+
+  .navbar-brand {
+    justify-content: center;
+  }
+}
